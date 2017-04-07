@@ -1,6 +1,9 @@
 [![Build
 status](https://travis-ci.org/inconshreveable/ngrok.svg)](https://travis-ci.org/inconshreveable/ngrok)
 
+Linux: make release-client
+Win64: GOOS=windows GOARCH=amd64 make release-client 
+
 # ngrok - Introspected tunnels to localhost ([homepage](https://ngrok.com))
 ### ”I want to expose a local server behind a NAT or firewall to the internet.”
 ![](https://ngrok.com/static/img/overview.png)
