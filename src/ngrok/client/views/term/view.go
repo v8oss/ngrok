@@ -7,6 +7,7 @@ import (
 	"ngrok/log"
 	"ngrok/proto"
 	"ngrok/util"
+	"strings"
 	"time"
 )
 
@@ -97,15 +98,30 @@ func (v *TermView) draw() {
 		v.APrintf(termbox.ColorYellow, 30, 0, updateMsg)
 	}
 
-	v.APrintf(termbox.ColorBlue|termbox.AttrBold, 0, 0, "ngrok")
+	v.APrintf(termbox.ColorBlue|termbox.AttrBold, 0, 0, "ngrok - Valid8 edition - https://github.com/v8oss/ngrok")
 	statusStr, statusColor := connStatusRepr(state.GetConnStatus())
 	v.APrintf(statusColor, 0, 2, "%-30s%s", "Tunnel Status", statusStr)
 
 	v.Printf(0, 3, "%-30s%s/%s", "Version", state.GetClientVersion(), state.GetServerVersion())
 	var i int = 4
 	for _, t := range state.GetTunnels() {
-		v.Printf(0, i, "%-30s%s -> %s", "Forwarding", t.PublicUrl, t.LocalAddr)
+
+		url := t.PublicUrl
+
+		if strings.Contains(url, "444") {
+
+			url = strings.Replace(url, "http:", "https:", -1)
+
+		} else {
+
+			url = strings.Replace(url, "https:", "http:", -1)
+		}
+
+		v.Printf(0, i, "%-30s%s -> %s", "Forwarding", url, t.LocalAddr)
+
 		i++
+
+		break
 	}
 	v.Printf(0, i+0, "%-30s%s", "Web Interface", v.ctl.GetWebInspectAddr())
 
