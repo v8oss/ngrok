@@ -5,9 +5,12 @@ After=network.service
 
 [Service]
 
-ExecStart=/usr/sbin/ngrokd -tlsKey /etc/letsencrypt/live/valid8.com/privkey.pem -tlsCrt /etc/letsencrypt/live/valid8.com/cert.pem -domain valid8.com -httpAddr 0.0.0.0:81 -httpsAddr 0.0.0.0:444
+ExecStart=/usr/sbin/ngrokd -tlsKey /etc/letsencrypt/live/valid8.com/privkey.pem -tlsCrt /etc/letsencrypt/live/valid8.com/cert.pem -domain valid8.com -httpAddr ":81" -httpsAddr ":444" -log-level "ERROR"
+Restart=always
 
 [Install]
 
 WantedBy=multi-user.target
+
+
 
